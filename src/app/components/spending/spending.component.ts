@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Expense } from "src/app/interfaces/expense.interface";
 import { ExpensesService } from "src/app/services/expenses.service";
-import { Observable, of } from "rxjs";
+import { Observable, catchError, of } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-spending",
@@ -38,12 +39,16 @@ import { Observable, of } from "rxjs";
     >
       <li *ngFor="let expense of expenses$ | async">{{ expense.day }}</li>
     </ul>
+    <div *ngIf="error" class="text-center text-dark-brown">
+      <p>An error occurred while retrieving data. Please try again later.</p>
+    </div>
   `,
   encapsulation: ViewEncapsulation.None,
 })
 export class SpendingComponent implements OnInit {
   expenses$: Observable<Expense[]> = of([]);
   barHeights = [3.125, 6.25, 9.375, 5.625, 4.375, 7.75, 4.6875];
+  error = false;
 
   constructor(private expensesService: ExpensesService) {}
 
@@ -52,6 +57,11 @@ export class SpendingComponent implements OnInit {
   }
 
   getSpendingData(): void {
-    this.expenses$ = this.expensesService.getData();
+    this.expenses$ = this.expensesService.getData().pipe(
+      catchError(() => {
+        this.error = true;
+        return of([]);
+      })
+    );
   }
 }
