@@ -18,7 +18,7 @@ Mobile view (450px wide)
 
 ## Links
 
-- Live Site URL (I use Netlify for websites hosting) ⇒ 
+- Live Site URL (I use Netlify for websites hosting) ⇒ https://expenses-chart-km9.netlify.app
 
 ## Overview
 
