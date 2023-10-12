@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ExpensesService } from "src/app/services/expenses.service";
 
 @Component({
   selector: "app-month-stats",
@@ -29,5 +28,5 @@ import { ExpensesService } from "src/app/services/expenses.service";
   encapsulation: ViewEncapsulation.None,
 })
 export class MonthStatsComponent {
-  constructor(public expenseService: ExpensesService) {}
+  
 }
